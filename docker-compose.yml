@@ -25,7 +25,7 @@ services:
     hostname: node-slave1
     tty: true
     ports:
-      - "7042:8042"
+      - "18042:8042"
     networks:
       cluster-network:
         aliases: 
@@ -36,7 +36,7 @@ services:
     hostname: node-slave2
     tty: true
     ports:
-      - "9042:8042"
+      - "28042:8042"
     networks:
       cluster-network:
         aliases: 
