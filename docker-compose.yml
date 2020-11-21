@@ -4,7 +4,7 @@ services:
     depends_on:
       - node-slave1
       - node-slave2
-    image: cluster-base:latest
+    image: hadoop-spark-baseline:latest
     container_name: node-master
     hostname: node-master
     tty: true
@@ -20,7 +20,7 @@ services:
         aliases: 
           - node-master
   node-slave1:
-    image: cluster-base:latest
+    image: hadoop-spark-baseline:latest
     container_name: node-slave1
     hostname: node-slave1
     tty: true
@@ -31,7 +31,7 @@ services:
         aliases: 
           - node-slave1
   node-slave2:
-    image: cluster-base:latest
+    image: hadoop-spark-baseline:latest
     container_name: node-slave2
     hostname: node-slave2
     tty: true
