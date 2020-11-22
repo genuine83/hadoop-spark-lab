@@ -7,18 +7,8 @@ ENV SPARK_HOME /opt/spark
 ENV PATH="${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin:${SPARK_HOME}/bin:${SPARK_HOME}/sbin:${PATH}"
 ENV HADOOP_VERSION 2.7.0
 ENV SPARK_VERSION 2.3.2
-#ENV PYSPARK_DRIVER_PYTHON=jupyter
-#ENV PYSPARK_DRIVER_PYTHON_OPTS='notebook'
-#ENV PYSPARK_PYTHON=python3
 
 RUN apt-get update && apt-get install -y wget openjdk-8-jdk ssh openssh-server
-#RUN apt update && apt install -y python3 python3-pip python3-dev build-essential libssl-dev libffi-dev libpq-dev
-
-#COPY /confs/requirements.req /
-#RUN pip3 install -r requirements.req
-#RUN pip3 install dask[bag] --upgrade
-#RUN pip3 install --upgrade toree
-#RUN python3 -m bash_kernel.install
 
 RUN wget -P /tmp/ https://archive.apache.org/dist/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz
 RUN tar xvf /tmp/hadoop-${HADOOP_VERSION}.tar.gz -C /tmp && \
@@ -39,7 +29,6 @@ COPY /confs/slaves /opt/hadoop/etc/hadoop/
 COPY /script_files/bootstrap.sh /
 COPY /confs/spark-defaults.conf ${SPARK_HOME}/conf
 
-#RUN jupyter toree install --spark_home=${SPARK_HOME}
 RUN echo "export JAVA_HOME=${JAVA_HOME}" >> /etc/environment
 
 EXPOSE 9000
@@ -47,9 +36,5 @@ EXPOSE 7077
 EXPOSE 4040
 EXPOSE 8020
 EXPOSE 22
-
-RUN mkdir lab
-#COPY notebooks/*.ipynb /root/lab/
-#COPY datasets /root/lab/datasets
 
 ENTRYPOINT ["/bin/bash", "bootstrap.sh"]
