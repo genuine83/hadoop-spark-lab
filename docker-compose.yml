@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.8"
 services:
   node-master:
     depends_on:
@@ -7,6 +7,8 @@ services:
     image: hadoop-spark-baseline:latest
     container_name: node-master
     hostname: node-master
+    environment:
+      - SPARK_MASTER_MODE=yarn
     tty: true
     ports:
       - "8088:8088"
@@ -15,9 +17,11 @@ services:
       - "8080:8080"
       - "8042:8042"
       - "8888:8888"
+    volumes:
+      - /opt/artifacts:/opt/artifacts
     networks:
       cluster-network:
-        aliases: 
+        aliases:
           - node-master
   node-slave1:
     image: hadoop-spark-baseline:latest
@@ -28,7 +32,7 @@ services:
       - "18042:8042"
     networks:
       cluster-network:
-        aliases: 
+        aliases:
           - node-slave1
   node-slave2:
     image: hadoop-spark-baseline:latest
@@ -39,8 +43,15 @@ services:
       - "28042:8042"
     networks:
       cluster-network:
-        aliases: 
+        aliases:
           - node-slave2
+volumes:
+  artifacts:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /opt/artifacts
 networks:
   cluster-network:
     driver: bridge
